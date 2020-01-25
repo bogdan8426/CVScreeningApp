@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.geometry.Insets?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="CVScreening.Selection.SelectionController" fx:id="mainVBox">
+
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu text="File">
+            <MenuItem text="Quit" onAction="#handleExit"/>
+        </Menu>
+    </MenuBar>
+
+    <BorderPane focusTraversable="true" VBox.vgrow="ALWAYS">
+        <left>
+          <HBox>
+            <VBox >
+              <Label alignment="CENTER" minWidth="60.0" style="&#10;" text="Domains" textAlignment="CENTER">
+                <font>
+                  <Font size="24.0" fx:id="x1"/>
+                </font>
+                <textFill>
+                  <Color blue="0.624" green="0.624" red="0.624" fx:id="x2"/>
+                </textFill>
+              </Label>
+
+              <ListView fx:id="domainsListView" onMouseClicked="#domainSelected" minHeight="500"/>
+
+            </VBox>
+            <Separator orientation="VERTICAL"/>
+          </HBox>
+        </left>
+
+      <center>
+        <AnchorPane fx:id="centerAnchorPane">
+            <VBox>
+                <padding>
+                    <Insets top="40" left="40"/>
+                </padding>
+                <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Getting started" fx:id="centerTitle"
+                       textAlignment="CENTER" textFill="$x2"/>
+                <HBox opacity="0.67" fx:id="centerContent">
+                    <padding>
+                        <Insets top="25" left="25"/>
+                    </padding>
+                    <Label text="Please choose a domain from the list on the left side."/>
+                </HBox>
+            </VBox>
+        </AnchorPane>
+
+      </center>
+
+    </BorderPane>
+
+</VBox>
