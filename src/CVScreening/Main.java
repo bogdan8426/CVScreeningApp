@@ -1,10 +1,22 @@
 package CVScreening;
 
+import CVScreening.CVGenerator.CVGenerator;
+import CVScreening.DataModel.CV;
+import CVScreening.DataModel.Domain;
+import CVScreening.DataModel.JobDescription;
+import CVScreening.DataModel.JobLevel;
 import javafx.application.Application;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.FileNotFoundException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Main extends Application {
 
