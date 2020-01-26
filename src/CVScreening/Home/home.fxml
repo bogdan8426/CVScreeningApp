@@ -7,10 +7,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.BorderPane?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.StackPane?>
 <BorderPane fx:id="mainBorderPane"
             xmlns:fx="http://javafx.com/fxml" fx:controller="CVScreening.Home.HomeController">
     <center>
-        <VBox id="home" alignment="CENTER" spacing="20" >
+        <VBox id="home" alignment="CENTER" spacing="20" minHeight="20" minWidth="60" >
+            <ImageView fitHeight="100" fitWidth="150">
+                <image>
+                    <Image url="@../logo.png"/>
+                </image>
+            </ImageView>
+
+
             <Label style="-fx-font-weight: bold;"  text="Welcome to CV Screening Application"  >
                 <font>
                     <Font size="18.0"/>
@@ -22,5 +33,6 @@
                     <Button text="Generate random CV files" GridPane.columnIndex="1" onAction="#generateFiles" />
                 </GridPane>
         </VBox>
+
     </center>
 </BorderPane>

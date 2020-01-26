@@ -1,7 +1,5 @@
 package CVScreening.DataModel;
 
-import sun.awt.HKSCS;
-
 import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
@@ -13,8 +11,16 @@ public class CV {
     private List<Education> education;
     private List<Experience> experience;
 
-    public double getScore(JobDescription jobDescription) {
-        return new Score().getValue(jobDescription);
+    private Score score;
+
+    public double getScore() {
+        return score.getValue();
+    }
+
+    public double computeScore(JobDescription jobDescription) {
+        score = new Score();
+        score.compute(jobDescription);
+        return score.getValue();
     }
 
     public CV(PersonalInfo info, List<Education> education, List<Experience> experience) {
@@ -62,7 +68,11 @@ public class CV {
 
         double value;
 
-        double getValue(JobDescription jobDescription) {
+        public double getValue() {
+            return value;
+        }
+
+        public void compute(JobDescription jobDescription) {
             computeRequirementScore(jobDescription.getDomain(),
                     jobDescription.getPosition(),
                     jobDescription.getJobLevel(),
@@ -73,8 +83,6 @@ public class CV {
                         jobDescription.getJobsChanged(),
                         jobDescription.getSpecificUniversity());
             }
-
-            return value;
         }
 
         private void computeRequirementScore(Domain domain, String position, JobLevel jobLevel, int minimumStudyTime) {

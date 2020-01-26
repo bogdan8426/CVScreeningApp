@@ -5,6 +5,7 @@ import CVScreening.DataModel.Domain;
 import CVScreening.DataModel.Experience;
 
 import CVScreening.JobDescription.JobDescriptionController;
+import CVScreening.Results.ResultsController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -44,6 +45,10 @@ public class SelectionController {
         SelectionController.cvs = cvs;
     }
 
+    public static ObservableList<CV> getCvs() {
+        return cvs;
+    }
+
     @FXML
     public void initialize(){
         domainsListView.setItems(FXCollections.observableArrayList(Domain.values()));
@@ -81,7 +86,7 @@ public class SelectionController {
         hireButton.setOnAction(this::showJobDescriptionDialog);
 
         hireButton.setAlignment(Pos.CENTER);
-        hireButton.setMinSize(100,60);
+        hireButton.setMinSize(80,50);
         centerContent.getChildren().add(hireButton);
 
 
@@ -108,7 +113,23 @@ public class SelectionController {
 
             Optional<ButtonType> result = dialog.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK){
-                controller.processResults(selectedDomain, selectedPosition);
+                List<CV> results = controller.processResults(selectedDomain, selectedPosition);
+                Stage stage = (Stage) mainVBox.getScene().getWindow();
+
+                try {
+                    FXMLLoader loader = new FXMLLoader();
+                    loader.setLocation(getClass().getResource("../Results/results.fxml"));
+                    Parent root = loader.load();
+                    ResultsController resultsController = loader.getController();
+                    resultsController.initialize(results);
+                    Scene scene = new Scene(root, 900, 550);
+                    stage.setScene(scene);
+                    stage.centerOnScreen();
+                    stage.show();
+                } catch (IOException e) {
+                    //TODO
+                    e.printStackTrace();
+                }
             }
         } catch(IOException e){
             //TODO

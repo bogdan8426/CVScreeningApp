@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
@@ -35,13 +36,17 @@ public class HomeController {
 
     @FXML
     public void initialize(){
+        Image applicationIcon = new Image(getClass().getResourceAsStream("../logo.png"));
+        ImageView logo = new ImageView(applicationIcon);
 
     }
 
     @FXML
     public void loadCVfiles() {
         ProgressIndicator indicator = loadingAnimation(0);
-        mainBorderPane.getChildren().get(0).setDisable(true);
+        gridPane.getChildren().get(1).setDisable(true);
+        gridPane.getChildren().get(0).setDisable(true);
+
         Stage stage = (Stage) mainBorderPane.getScene().getWindow();
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override

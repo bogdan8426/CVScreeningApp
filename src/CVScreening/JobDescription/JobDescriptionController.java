@@ -1,17 +1,22 @@
 package CVScreening.JobDescription;
 
 import CVScreening.DataModel.*;
+import CVScreening.Results.ResultsController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Slider;
+import javafx.stage.Stage;
 
-import java.text.DecimalFormat;
+import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JobDescriptionController {
     @FXML
@@ -24,6 +29,8 @@ public class JobDescriptionController {
     public Slider jobsChangedSlider;
     @FXML
     public ChoiceBox<String> universityChoice;
+    @FXML
+    public DialogPane mainDialogPane;
 
     private ObservableList<CV> cvs;
 
@@ -43,7 +50,7 @@ public class JobDescriptionController {
 
     }
 
-    public void processResults(Domain selectedDomain, String selectedPosition) {
+    public List<CV> processResults(Domain selectedDomain, String selectedPosition) {
         JobDescription jobDescription = new JobDescription(selectedDomain,selectedPosition,
                 jobLevelChoice.getValue(), (int) minStudyYearsSlider.getValue());
         jobDescription.setHasLeadershipExperience(leadBackgroundCheckBox.isSelected());
@@ -53,40 +60,11 @@ public class JobDescriptionController {
             jobDescription.setSpecificUniversity(universityChoice.getValue());
         }
 
-        HashMap<String, Double> scores = new HashMap<>();
         for(CV cv: cvs){
-            double score = cv.getScore(jobDescription);
-            if(score > 0.0){
-                scores.put(cv.getInfo().getFirstName() + " " + cv.getInfo().getLastName(), score);
-            }
+            cv.computeScore(jobDescription);
         }
-        sortByValue(scores);
-//        HashMap<String, Double> finalScores = sortByValue(scores);
-//        scores.keySet().forEach(key -> System.out.println(key +": " + new DecimalFormat("#.##").format(finalScores.get(key)*100) + "% match"  ));
-    }
+        return new SortedList<>(cvs, Comparator.comparingDouble(cv -> -cv.getScore()));
 
-    // function to sort hashmap by values
-    public static HashMap<String, Double> sortByValue(HashMap<String, Double> hm)
-    {
-        // Create a list from elements of HashMap
-        List<Map.Entry<String, Double> > list =
-                new LinkedList<Map.Entry<String, Double> >(hm.entrySet());
+}
 
-        // Sort the list
-        Collections.sort(list, new Comparator<Map.Entry<String, Double> >() {
-            public int compare(Map.Entry<String, Double> o1,
-                               Map.Entry<String, Double> o2)
-            {
-                return (o1.getValue()).compareTo(o2.getValue());
-            }
-        });
-
-        // put data from sorted list to hashmap
-        HashMap<String, Double> temp = new LinkedHashMap<String, Double>();
-        for (Map.Entry<String, Double> aa : list) {
-            System.out.println(aa.getKey() +": " + new DecimalFormat("#.##").format(aa.getValue()*100) + "% match"  );
-            temp.put(aa.getKey(), aa.getValue());
-        }
-        return temp;
-    }
 }

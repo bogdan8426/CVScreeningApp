@@ -10,6 +10,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -18,8 +19,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Home/home.fxml"));
         primaryStage.setTitle("CV Screening Application");
-        primaryStage.setScene(new Scene(root, 900,200));
+        primaryStage.setScene(new Scene(root, 900,300));
         primaryStage.centerOnScreen();
+        Image applicationIcon = new Image(getClass().getResourceAsStream("logo.png"));
+        primaryStage.getIcons().add(applicationIcon);
         primaryStage.show();
     }
 
