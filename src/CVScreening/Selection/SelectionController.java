@@ -100,24 +100,22 @@ public class SelectionController {
         fxmlLoader.setLocation(getClass().getResource("../JobDescription/jobDescription.fxml"));
         try{
             dialog.getDialogPane().setContent(fxmlLoader.load());
+            JobDescriptionController controller = fxmlLoader.getController();
+            controller.initialize(cvs);
+
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
+
+            Optional<ButtonType> result = dialog.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK){
+                controller.processResults(selectedDomain, selectedPosition);
+            }
         } catch(IOException e){
             //TODO
             System.out.println("Couldn't load the dialog");
             e.printStackTrace();
             return;
         }
-
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-        dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
-
-        Optional<ButtonType> result = dialog.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK){
-            JobDescriptionController controller = fxmlLoader.getController();
-            //TODO: continue
-        }
-
-
-
 
 
 
