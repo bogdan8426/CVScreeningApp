@@ -1,23 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DialogPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <DialogPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainDialogPane"
             xmlns="http://javafx.com/javafx/8.0.171" fx:controller="CVScreening.JobDescription.JobDescriptionController">
 
     <content>
         <GridPane hgap="10" vgap="10">
 
-            <Label text="Job Brief*: " GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER_RIGHT" />
-            <TextArea wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="Job Brief: " GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER_RIGHT" />
+            <TextArea wrapText="true" fx:id="jobBrief" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
             <Label text="Mandatory requirements" style="-fx-font-weight: bold; -fx-font-size: 20" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
 
@@ -41,5 +34,6 @@
             <ChoiceBox fx:id="universityChoice" GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
             </GridPane>
+
     </content>
 </DialogPane>

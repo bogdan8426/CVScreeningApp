@@ -1,12 +1,6 @@
 package CVScreening;
 
-import CVScreening.CVGenerator.CVGenerator;
-import CVScreening.DataModel.CV;
-import CVScreening.DataModel.Domain;
-import CVScreening.DataModel.JobDescription;
-import CVScreening.DataModel.JobLevel;
 import javafx.application.Application;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

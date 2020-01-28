@@ -1,7 +1,6 @@
 package CVScreening.DataModel;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class PersonalInfo {
 
@@ -10,7 +9,10 @@ public class PersonalInfo {
     private String phoneNumber;
     private LocalDate birthday;
     private Sex sex;
-    private final String ID;
+
+
+    public PersonalInfo() {
+    }
 
     public PersonalInfo(String firstName, String lastName, String phoneNumber, LocalDate birthday, Sex sex) {
         this.firstName = firstName;
@@ -18,7 +20,6 @@ public class PersonalInfo {
         this.phoneNumber = phoneNumber;
         this.birthday = birthday;
         this.sex = sex;
-        ID = sex.toID()+""+Math.abs(lastName.hashCode()+birthday.hashCode());
     }
 
     public String getFirstName() {
@@ -41,25 +42,32 @@ public class PersonalInfo {
         return sex;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof PersonalInfo)) return false;
-        PersonalInfo that = (PersonalInfo) o;
-        return ID.equals(that.ID);
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(ID);
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
 
     @Override
     public String toString() {
         return  "\n\t" + firstName  + " " + lastName  +
                 "\n\t" + phoneNumber +
                 "\n\tBorn: " + birthday +
-                "\n\tSex: " + sex +
-                "\n\tID = " + ID;
+                "\n\tSex: " + sex;
     }
 }

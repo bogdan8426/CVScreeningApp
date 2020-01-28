@@ -1,7 +1,5 @@
 package CVScreening.DataModel;
 
-import java.time.Period;
-
 public class Experience {
 
     private TimeInterval timeInterval;
@@ -16,6 +14,10 @@ public class Experience {
         this.description = description;
         this.company = company;
         this.domain = domain;
+    }
+
+    public Experience() {
+
     }
 
     public TimeInterval getTimeInterval() {
@@ -36,6 +38,26 @@ public class Experience {
 
     public Domain getDomain() {
         return domain;
+    }
+
+    public void setTimeInterval(TimeInterval timeInterval) {
+        this.timeInterval = timeInterval;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setDomain(Domain domain) {
+        this.domain = domain;
     }
 
     @Override

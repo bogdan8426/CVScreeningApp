@@ -1,28 +1,25 @@
 package CVScreening.JobDescription;
 
 import CVScreening.DataModel.*;
-import CVScreening.Results.ResultsController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Slider;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class JobDescriptionController {
+    @FXML
+    public TextArea jobBrief;
     @FXML
     public ChoiceBox<JobLevel> jobLevelChoice;
     @FXML
     public Slider minStudyYearsSlider;
+
     @FXML
     public CheckBox leadBackgroundCheckBox;
     @FXML
@@ -31,6 +28,7 @@ public class JobDescriptionController {
     public ChoiceBox<String> universityChoice;
     @FXML
     public DialogPane mainDialogPane;
+
 
     private ObservableList<CV> cvs;
 

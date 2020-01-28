@@ -1,7 +1,5 @@
 package CVScreening.DataModel;
 
-import java.time.Period;
-
 public enum JobLevel {
     JUNIOR, MIDDLE, SENIOR;
 

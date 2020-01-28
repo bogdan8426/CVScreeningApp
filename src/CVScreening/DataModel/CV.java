@@ -1,10 +1,15 @@
 package CVScreening.DataModel;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.time.Period;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+//import java.time.Period;
+//import java.time.Period;
+
+@XmlRootElement
 public class CV {
 
     private PersonalInfo info;
@@ -23,6 +28,9 @@ public class CV {
         return score.getValue();
     }
 
+    public CV() {
+    }
+
     public CV(PersonalInfo info, List<Education> education, List<Experience> experience) {
         this.info = info;
         this.education = education;
@@ -39,6 +47,22 @@ public class CV {
 
     public List<Experience> getExperience() {
         return experience;
+    }
+
+    public void setInfo(PersonalInfo info) {
+        this.info = info;
+    }
+
+    public void setEducation(List<Education> education) {
+        this.education = education;
+    }
+
+    public void setExperience(List<Experience> experience) {
+        this.experience = experience;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
     }
 
     @Override

@@ -13,34 +13,31 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.LinkedList;
 import java.util.List;
 
 import static CVScreening.CVGenerator.Constant.*;
 
-public class CVWriter extends CVReadWrite{
+class CVWriter {
 
-    private ObservableList<CV> cvs;
+    private List<CV> cvs;
 
-    public CVWriter(ObservableList<CV> cvs){
+    public CVWriter(List<CV> cvs){
         this.cvs = cvs;
     }
 
     public void saveCVs(){
         for (CV cv: cvs) {
-
             try {
                 String path = "C:\\Users\\Bogdan\\Desktop\\Facultate\\Java advanced\\CV Screening Application\\src\\CVScreening\\CVs\\"
                         + getFileName(cv);
                 FileOutputStream cv_file = new FileOutputStream(path);
-                // create an XMLOutputFactory
+
                 XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
-                //
-                // create XMLEventWriter
-                XMLEventWriter eventWriter = outputFactory
-                        .createXMLEventWriter(cv_file);
-                // create an EventFactory
+                XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(cv_file);
                 XMLEventFactory eventFactory = XMLEventFactory.newInstance();
                 XMLEvent end = eventFactory.createDTD("\n");
+
                 // create and write Start Tag
                 StartDocument startDocument = eventFactory.createStartDocument();
                 eventWriter.add(startDocument);
@@ -53,7 +50,6 @@ public class CVWriter extends CVReadWrite{
 
                 saveCV(eventWriter, eventFactory, cv);
 
-
                 eventWriter.add(eventFactory.createEndElement("", "", "cv"));
                 eventWriter.add(end);
                 eventWriter.add(eventFactory.createEndDocument());
@@ -64,7 +60,6 @@ public class CVWriter extends CVReadWrite{
 
         }
     }
-
 
     private void saveCV(XMLEventWriter eventWriter, XMLEventFactory eventFactory, CV cv)
             throws XMLStreamException {
@@ -165,6 +160,7 @@ public class CVWriter extends CVReadWrite{
         eventWriter.add(tab);
         eventWriter.add(configStartElement);
         eventWriter.add(end);
+
         // Write the different nodes
         createNode(eventWriter, FIRST_NAME.toString(), info.getFirstName());
         createNode(eventWriter, LAST_NAME.toString(), info.getLastName());
@@ -183,16 +179,23 @@ public class CVWriter extends CVReadWrite{
         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
         XMLEvent end = eventFactory.createDTD("\n");
         XMLEvent tab = eventFactory.createDTD("\t\t\t");
+
         // create Start node
         StartElement sElement = eventFactory.createStartElement("", "", name);
         eventWriter.add(tab);
         eventWriter.add(sElement);
+
         // create Content
         Characters characters = eventFactory.createCharacters(value);
         eventWriter.add(characters);
+
         // create End node
         EndElement eElement = eventFactory.createEndElement("", "", name);
         eventWriter.add(eElement);
         eventWriter.add(end);
+    }
+
+    private String getFileName(CV cv){
+        return "CV_" + cv.getInfo().getFirstName() + "_" + cv.getInfo().getLastName() + ".xml";
     }
 }

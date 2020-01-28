@@ -3,7 +3,6 @@ package CVScreening.Selection;
 import CVScreening.DataModel.CV;
 import CVScreening.DataModel.Domain;
 import CVScreening.DataModel.Experience;
-
 import CVScreening.JobDescription.JobDescriptionController;
 import CVScreening.Results.ResultsController;
 import javafx.application.Platform;
@@ -17,11 +16,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public class SelectionController {
 
@@ -121,7 +125,7 @@ public class SelectionController {
                     loader.setLocation(getClass().getResource("../Results/results.fxml"));
                     Parent root = loader.load();
                     ResultsController resultsController = loader.getController();
-                    resultsController.initialize(results);
+                    resultsController.initialize(results,selectedPosition);
                     Scene scene = new Scene(root, 900, 550);
                     stage.setScene(scene);
                     stage.centerOnScreen();

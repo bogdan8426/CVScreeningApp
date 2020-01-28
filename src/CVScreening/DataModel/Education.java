@@ -5,6 +5,8 @@ public class Education {
     private String universityName;
     private Domain domain;
 
+    public Education(){}
+
     public Education(TimeInterval timeInterval, String universityName, Domain domain) {
         this.timeInterval = timeInterval;
         this.universityName = universityName;
@@ -21,6 +23,18 @@ public class Education {
 
     public Domain getDomain() {
         return domain;
+    }
+
+    public void setTimeInterval(TimeInterval timeInterval) {
+        this.timeInterval = timeInterval;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    public void setDomain(Domain domain) {
+        this.domain = domain;
     }
 
     @Override

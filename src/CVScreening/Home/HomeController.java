@@ -1,8 +1,11 @@
 package CVScreening.Home;
 
 import CVScreening.CVGenerator.CVGenerator;
-import CVScreening.Selection.SelectionController;
 import CVScreening.DataModel.CV;
+import CVScreening.Selection.SelectionController;
+import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.exceptions.CVFilesWriteException;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -13,19 +16,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-
-import static javafx.scene.layout.BackgroundPosition.CENTER;
-import static javafx.scene.layout.BackgroundRepeat.NO_REPEAT;
-import static javafx.scene.layout.BackgroundRepeat.REPEAT;
-import static javafx.scene.layout.BackgroundSize.DEFAULT;
 
 public class HomeController {
 
@@ -33,6 +28,8 @@ public class HomeController {
     public GridPane gridPane;
     @FXML
     public BorderPane mainBorderPane;
+
+    private CVGenerator generator = new CVGenerator();
 
     @FXML
     public void initialize(){
@@ -50,13 +47,8 @@ public class HomeController {
         Stage stage = (Stage) mainBorderPane.getScene().getWindow();
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override
-            public ObservableList<CV> call() {
-                try {
-                    return CVGenerator.loadCVs();
-                } catch (FileNotFoundException e) {
-                    //TODO: throw exception
-                    throw new RuntimeException();
-                }
+            public ObservableList<CV> call() throws CVFilesReadException {
+                    return generator.loadCVs();
             }
         };
 
@@ -87,15 +79,14 @@ public class HomeController {
 
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override
-            public ObservableList<CV> call() {
-                return CVGenerator.generateRandomFiles();
+            public ObservableList<CV> call() throws CVFilesWriteException {
+                ObservableList<CV> cvObservableList = FXCollections.observableArrayList(generator.generateRandomFiles());
+                return cvObservableList;
             }
         };
 
         task.setOnSucceeded(e -> {
-
             indicator.setProgress(1.0f);
-            gridPane.add(indicator,1,1);
             GridPane.setHalignment(indicator, HPos.CENTER);
             loadCVfiles();});
 

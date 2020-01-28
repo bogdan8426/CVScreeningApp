@@ -7,11 +7,9 @@ enum Constant {
     EDUCATION_SECTION, EDUCATION, PERIOD, UNIVERSITY_NAME, DOMAIN,
     EXPERIENCE_SECTION, EXPERIENCE, POSITION, DESCRIPTION, COMPANY;
 
-    private String name = this.name().toLowerCase();
-
     @Override
     public String toString() {
-        return this.name;
+        return this.name().toLowerCase();
     }
 
     String parse(XMLEvent event){
