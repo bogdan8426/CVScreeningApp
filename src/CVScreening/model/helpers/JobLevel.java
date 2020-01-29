@@ -1,4 +1,4 @@
-package CVScreening.DataModel;
+package CVScreening.model.helpers;
 
 public enum JobLevel {
     JUNIOR, MIDDLE, SENIOR;

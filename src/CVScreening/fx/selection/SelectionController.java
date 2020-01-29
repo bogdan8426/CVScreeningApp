@@ -1,10 +1,9 @@
-package CVScreening.Selection;
+package CVScreening.fx.selection;
 
-import CVScreening.DataModel.CV;
-import CVScreening.DataModel.Domain;
-import CVScreening.DataModel.Experience;
-import CVScreening.JobDescription.JobDescriptionController;
-import CVScreening.Results.ResultsController;
+import CVScreening.fx.jobDescription.JobDescriptionController;
+import CVScreening.fx.results.ResultsController;
+import CVScreening.model.CV;
+import CVScreening.model.helpers.Domain;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +14,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -26,61 +24,48 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class SelectionController {
 
     @FXML
     public ListView<Domain> domainsListView;
-
     @FXML
     public AnchorPane centerAnchorPane;
-
-    private static ObservableList<CV> cvs;
     @FXML
     public VBox mainVBox;
-    private ListView<String> positionsListView = new ListView<>();
-    private Button hireButton = new Button("Hire!");
     @FXML
     public HBox centerContent;
     @FXML
     public Label centerTitle;
 
-    public static void setCvs(ObservableList<CV> cvs) {
-        SelectionController.cvs = cvs;
-    }
-
-    public static ObservableList<CV> getCvs() {
-        return cvs;
-    }
+    private static ObservableList<CV> cvs;
+    private ListView<String> positionsListView = new ListView<>();
+    private Button hireButton = new Button("Hire!");
+    private static final Logger log = Logger.getLogger(SelectionController.class.getName());
 
     @FXML
     public void initialize(){
         domainsListView.setItems(FXCollections.observableArrayList(Domain.values()));
     }
 
-
-    @FXML
-    public void handleExit(ActionEvent actionEvent) {
-        Platform.exit();
+    public static void setCvs(ObservableList<CV> cvs) {
+        SelectionController.cvs = cvs;
     }
 
-    public void domainSelected(MouseEvent mouseEvent) {
+    @FXML
+    public void domainSelected() {
         Domain selectedDomain = domainsListView.getSelectionModel().getSelectedItem();
         centerTitle.setText("Positions");
         centerContent.getChildren().clear();
         centerContent.spacingProperty().set(10.0d);
 
-
-
         Set<String> positions = new HashSet<>();
-        for(CV cv: cvs){
-            List<Experience> experienceList = cv.getExperience();
-            for(Experience experience: experienceList){
-                if(experience.getDomain().equals(selectedDomain)){
-                    positions.add(experience.getPosition());
-                }
-            }
-        }
+        cvs.forEach(cv -> cv.getExperience()
+                .stream()
+                .filter(experience -> experience.getDomain().equals(selectedDomain))
+                .forEach(experience -> positions.add(experience.getPosition()))
+        );
 
         positionsListView.setMinWidth(400);
         positionsListView.setItems(FXCollections.observableArrayList(positions));
@@ -92,11 +77,9 @@ public class SelectionController {
         hireButton.setAlignment(Pos.CENTER);
         hireButton.setMinSize(80,50);
         centerContent.getChildren().add(hireButton);
-
-
     }
 
-
+    @FXML
     private void showJobDescriptionDialog(ActionEvent event) {
         Domain selectedDomain = domainsListView.getSelectionModel().getSelectedItem();
         String selectedPosition = positionsListView.getSelectionModel().getSelectedItem();
@@ -120,6 +103,7 @@ public class SelectionController {
                 List<CV> results = controller.processResults(selectedDomain, selectedPosition);
                 Stage stage = (Stage) mainVBox.getScene().getWindow();
 
+
                 try {
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("../Results/results.fxml"));
@@ -129,20 +113,19 @@ public class SelectionController {
                     Scene scene = new Scene(root, 900, 550);
                     stage.setScene(scene);
                     stage.centerOnScreen();
+                    stage.setOnCloseRequest(ev->resultsController.handleExit());
                     stage.show();
                 } catch (IOException e) {
-                    //TODO
-                    e.printStackTrace();
+                    log.severe("Couldn't load the results page!");
                 }
             }
         } catch(IOException e){
-            //TODO
-            System.out.println("Couldn't load the dialog");
-            e.printStackTrace();
-            return;
+            log.severe("Couldn't load the job description dialog!");
         }
+    }
 
-
-
+    @FXML
+    public void handleExit() {
+        Platform.exit();
     }
 }

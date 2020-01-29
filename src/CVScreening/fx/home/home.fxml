@@ -9,12 +9,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <BorderPane fx:id="mainBorderPane"
-            xmlns:fx="http://javafx.com/fxml" fx:controller="CVScreening.Home.HomeController">
+            xmlns:fx="http://javafx.com/fxml" fx:controller="CVScreening.fx.home.HomeController">
     <center>
         <VBox id="home" alignment="CENTER" spacing="20" minHeight="20" minWidth="60" >
             <ImageView fitHeight="100" fitWidth="150">
                 <image>
-                    <Image url="@../logo.png"/>
+                    <Image url="@/assets/logo.png"/>
                 </image>
             </ImageView>
 

@@ -1,4 +1,7 @@
-package CVScreening.DataModel;
+package CVScreening.model;
+
+import CVScreening.model.helpers.Domain;
+import CVScreening.model.helpers.TimeInterval;
 
 public class Experience {
 

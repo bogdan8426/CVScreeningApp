@@ -1,4 +1,4 @@
-package CVScreening.DataModel;
+package CVScreening.model.helpers;
 
 import java.time.LocalDate;
 import java.time.Period;

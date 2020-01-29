@@ -1,10 +1,10 @@
-package CVScreening.Home;
+package CVScreening.fx.home;
 
 import CVScreening.CVGenerator.CVGenerator;
-import CVScreening.DataModel.CV;
-import CVScreening.Selection.SelectionController;
 import CVScreening.exceptions.CVFilesReadException;
-import CVScreening.exceptions.CVFilesWriteException;
+import CVScreening.exceptions.CVGeneratorException;
+import CVScreening.fx.selection.SelectionController;
+import CVScreening.model.CV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -14,8 +14,6 @@ import javafx.geometry.HPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -25,18 +23,11 @@ import java.io.IOException;
 public class HomeController {
 
     @FXML
-    public GridPane gridPane;
+    private GridPane gridPane;
     @FXML
     public BorderPane mainBorderPane;
 
     private CVGenerator generator = new CVGenerator();
-
-    @FXML
-    public void initialize(){
-        Image applicationIcon = new Image(getClass().getResourceAsStream("../logo.png"));
-        ImageView logo = new ImageView(applicationIcon);
-
-    }
 
     @FXML
     public void loadCVfiles() {
@@ -45,6 +36,7 @@ public class HomeController {
         gridPane.getChildren().get(0).setDisable(true);
 
         Stage stage = (Stage) mainBorderPane.getScene().getWindow();
+
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override
             public ObservableList<CV> call() throws CVFilesReadException {
@@ -56,7 +48,7 @@ public class HomeController {
             indicator.setProgress(1.0f);
             SelectionController.setCvs(task.getValue());
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("../Selection/selection.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("../selection/selection.fxml"));
                 Scene scene = new Scene(root, 900, 550);
                 stage.setScene(scene);
                 stage.centerOnScreen();
@@ -65,13 +57,13 @@ public class HomeController {
                 //TODO: throw exception
                 ex.printStackTrace();
             }
-
         });
 
         new Thread(task).start();
 
     }
 
+    @FXML
     public void generateFiles() {
         ProgressIndicator indicator = loadingAnimation(1);
         gridPane.getChildren().get(1).setDisable(true);
@@ -79,9 +71,8 @@ public class HomeController {
 
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override
-            public ObservableList<CV> call() throws CVFilesWriteException {
-                ObservableList<CV> cvObservableList = FXCollections.observableArrayList(generator.generateRandomFiles());
-                return cvObservableList;
+            public ObservableList<CV> call() throws CVGeneratorException {
+                return FXCollections.observableArrayList(generator.generateRandomFiles());
             }
         };
 

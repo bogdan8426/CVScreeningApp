@@ -1,7 +1,10 @@
 package CVScreening.CVGenerator;
 
-import CVScreening.DataModel.*;
+import CVScreening.model.*;
 import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.model.helpers.Domain;
+import CVScreening.model.helpers.Sex;
+import CVScreening.model.helpers.TimeInterval;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

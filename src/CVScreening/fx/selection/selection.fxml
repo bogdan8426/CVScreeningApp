@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
-<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="CVScreening.Selection.SelectionController" fx:id="mainVBox">
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="CVScreening.fx.selection.SelectionController" fx:id="mainVBox">
 
     <MenuBar VBox.vgrow="NEVER">
         <Menu text="File">
@@ -15,7 +15,7 @@
         </Menu>
     </MenuBar>
 
-    <BorderPane focusTraversable="false" VBox.vgrow="ALWAYS">
+    <BorderPane VBox.vgrow="ALWAYS">
         <left>
             <HBox>
                 <VBox spacing="15">
@@ -51,7 +51,7 @@
                         <Insets top="130" left="100"/>
                     </padding>
                     <ImageView fitHeight="280" fitWidth="400" opacity="0.05" >
-                        <Image url="@../logov2.png"/>
+                        <Image url="@/assets/logov2.png"/>
                     </ImageView>
                 </StackPane>
                 <VBox>

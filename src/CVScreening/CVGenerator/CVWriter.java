@@ -1,10 +1,9 @@
 package CVScreening.CVGenerator;
 
-import CVScreening.DataModel.CV;
-import CVScreening.DataModel.Education;
-import CVScreening.DataModel.Experience;
-import CVScreening.DataModel.PersonalInfo;
-import javafx.collections.ObservableList;
+import CVScreening.model.CV;
+import CVScreening.model.Education;
+import CVScreening.model.Experience;
+import CVScreening.model.PersonalInfo;
 
 import javax.xml.stream.XMLEventFactory;
 import javax.xml.stream.XMLEventWriter;
@@ -13,7 +12,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.LinkedList;
 import java.util.List;
 
 import static CVScreening.CVGenerator.Constant.*;

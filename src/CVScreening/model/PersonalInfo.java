@@ -1,6 +1,9 @@
-package CVScreening.DataModel;
+package CVScreening.model;
+
+import CVScreening.model.helpers.Sex;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class PersonalInfo {
 
@@ -62,6 +65,19 @@ public class PersonalInfo {
         this.sex = sex;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PersonalInfo)) return false;
+        PersonalInfo that = (PersonalInfo) o;
+        return getBirthday().equals(that.getBirthday()) &&
+                getSex() == that.getSex();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getBirthday(), getSex());
+    }
 
     @Override
     public String toString() {

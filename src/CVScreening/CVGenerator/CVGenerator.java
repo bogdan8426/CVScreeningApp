@@ -1,18 +1,16 @@
 package CVScreening.CVGenerator;
 
-import CVScreening.CVGenerator.root.InputReader;
-import CVScreening.DataModel.*;
+import CVScreening.model.*;
 import CVScreening.exceptions.CVFilesReadException;
 import CVScreening.exceptions.CVFilesWriteException;
-import javafx.collections.FXCollections;
+import CVScreening.exceptions.CVGeneratorException;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -34,11 +32,11 @@ public class CVGenerator {
 
     public CVGenerator(){}
 
-
-    public List<CV> generateRandomFiles() throws CVFilesWriteException {
+    public List<CV> generateRandomFiles() throws CVGeneratorException {
         log.info("Generating random CVs based on .txt files in root folder...");
+
         List<CV> cvs = new RandomCVs().generate();
-        log.info("CVs generated succesfully!");
+
         log.info("Writing .xml files to the CVs directory...");
         writeXMLs(cvs);
         return cvs;

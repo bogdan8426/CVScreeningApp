@@ -1,12 +1,17 @@
 package CVScreening.CVGenerator;
 
 import CVScreening.CVGenerator.root.InputReader;
-import CVScreening.DataModel.*;
-import javafx.collections.ObservableList;
+import CVScreening.model.*;
+import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.model.helpers.Domain;
+import CVScreening.model.helpers.Sex;
+import CVScreening.model.helpers.TimeInterval;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
+import java.util.logging.Logger;
 
 class RandomCVs {
 
@@ -14,20 +19,26 @@ class RandomCVs {
     private Random random = new Random();
     private InputReader reader = new InputReader();
 
-    public List<CV> generate() {
-        loadCVsFromTextFiles();
-        return cvs;
-    }
-
-    private List<CV> loadCVsFromTextFiles() {
-        Map<String, Sex> names = reader.getNames();
-        for(String name: names.keySet()) {
-            cvs.add(getCV(name, names.get(name)));
+    public List<CV> generate() throws CVFilesReadException {
+        try {
+            loadCVsFromTextFiles();
+        } catch (FileNotFoundException e) {
+            throw new CVFilesReadException("Problem generating list of random cvs, couldn't find txt file! ",e);
+        }
+        if(!cvs.isEmpty()){
+            Logger.getLogger(CVGenerator.class.getName()).info("CVs generated successfully!");
         }
         return cvs;
     }
 
-    private CV getCV(String name, Sex sex) {
+    private void loadCVsFromTextFiles() throws FileNotFoundException {
+        Map<String, Sex> names = reader.getNames();
+        for(String name: names.keySet()) {
+            cvs.add(getCV(name, names.get(name)));
+        }
+    }
+
+    private CV getCV(String name, Sex sex) throws FileNotFoundException {
         PersonalInfo info = getInfo(name, sex);
         List<Education> educations = getRandomEducationList(info.getBirthday());
         List<Experience> experiences = getRandomExperienceList(educations.get(educations.size()-1).getDomain(),
@@ -41,7 +52,7 @@ class RandomCVs {
         return new PersonalInfo(fullName[0], fullName[1], getRandomPhoneNumber(), getRandomBirthday(), sex);
     }
 
-    private List<Education> getRandomEducationList(LocalDate birthday){
+    private List<Education> getRandomEducationList(LocalDate birthday) throws FileNotFoundException {
         List<Education> educations = new LinkedList<>();
         int noSections = random.nextInt(1) + 2;
         LocalDate collegeStart = LocalDate.of(birthday.getYear()+19,
@@ -59,7 +70,7 @@ class RandomCVs {
         return educations;
     }
 
-    private List<Experience> getRandomExperienceList(Domain studyDomain, LocalDate studyEndDate) {
+    private List<Experience> getRandomExperienceList(Domain studyDomain, LocalDate studyEndDate) throws FileNotFoundException {
         List<Experience> experiences = new LinkedList<>();
         int noSections = random.nextInt(3) + 2;
         Map<Domain, Map<String, String>> jobs = reader.getJobs();

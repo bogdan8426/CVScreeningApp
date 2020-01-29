@@ -1,10 +1,15 @@
 package CVScreening.CVGenerator.root;
 
-import CVScreening.DataModel.Domain;
-import CVScreening.DataModel.Sex;
+import CVScreening.CVGenerator.CVGenerator;
+import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.model.CV;
+import CVScreening.model.helpers.Domain;
+import CVScreening.model.helpers.Sex;
+import javafx.collections.ObservableList;
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class InputReader {
@@ -15,15 +20,13 @@ public class InputReader {
     private Map<Domain, Map<String, String>> jobs = new LinkedHashMap<>();
     private List<String> companies = new LinkedList<>();
 
-    public List<String> getCompanies() {
-        try (Scanner companiesFile = new Scanner(new FileReader(path + "companies.txt"))) {
-            while(companiesFile.hasNextLine()) {
+    public List<String> getCompanies() throws FileNotFoundException {
+        try (Scanner companiesFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "companies.txt")))) {
+            while (companiesFile.hasNextLine()) {
                 companies.add(companiesFile.nextLine());
             }
-        } catch (IOException e) {
-            //TODO: Throw fileReadException or something!
-            e.printStackTrace();
         }
+
         // cleanup
         companies.removeAll(Collections.singleton(null));
         companies.removeAll(Collections.singleton(""));
@@ -31,15 +34,13 @@ public class InputReader {
         return companies;
     }
 
-    public Map<Domain, Map<String, String>> getJobs() {
+    public Map<Domain, Map<String, String>> getJobs() throws FileNotFoundException {
+
         List<String> list = new LinkedList<>();
-        try (Scanner jobsFile = new Scanner(new FileReader(path + "jobs.txt"))) {
+        try (Scanner jobsFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "jobs.txt")))) {
             while(jobsFile.hasNextLine()) {
                 list.add(jobsFile.nextLine());
             }
-        } catch (IOException e) {
-            //TODO: Throw fileReadException or something!
-            e.printStackTrace();
         }
 
         Map<String, String> positionDescription = new LinkedHashMap<>();
@@ -65,65 +66,24 @@ public class InputReader {
         return jobs;
     }
 
-    public Map<String, Sex> getNames(){
-        try (Scanner namesFile = new Scanner(new FileReader(path + "names.txt"))) {
+    public Map<String, Sex> getNames() throws FileNotFoundException {
+        try (Scanner namesFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "names.txt")))) {
             while(namesFile.hasNextLine()) {
                 String line = namesFile.nextLine();
                 String[] values = line.split(",");
                 names.put(values[0] + "," + values [1], Sex.valueOf(values[2]));
             }
-        } catch (IOException e) {
-            //TODO: Throw fileReadException or something!
-            e.printStackTrace();
         }
         return names;
     }
 
-    public List<String> getUniversities(){
-        try (Scanner univFile = new Scanner(new FileReader(path + "universities.txt"))) {
+    public List<String> getUniversities() throws FileNotFoundException {
+        try (Scanner univFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "universities.txt")))) {
             while(univFile.hasNextLine()) {
                 universities.add(univFile.nextLine());
             }
-        } catch (IOException e) {
-            //TODO: Throw fileReadException or something!
-            e.printStackTrace();
         }
         return universities;
     }
-
-
-    //    public static void main(String[] args) throws IOException {
-////
-//        Random random = new Random();
-//        try(FileWriter names = new FileWriter(path + "names.txt")){
-//            // write females
-//            for(int i = 0; i<500; i++) {
-//                names.write(firstNames.get(random.nextInt(100)));
-//                names.write(",");
-//                names.write(lastNames.get(random.nextInt(lastNames.size() - 1)));
-//                names.write(",");
-//                names.write(Sex.FEMALE.toString());
-//                names.write("\n");
-//            }
-//            //write males
-//            for(int i = 0; i<500; i++) {
-//                names.write(firstNames.get(random.nextInt(99) + 100));
-//                names.write(",");
-//                names.write(lastNames.get(random.nextInt(lastNames.size() - 1)));
-//                names.write(",");
-//                names.write(Sex.MALE.toString());
-//                names.write("\n");
-//            }
-//            //write unspecifiedSex
-//            for(int i = 0; i<500; i++) {
-//                names.write(firstNames.get(random.nextInt(firstNames.size()-1)));
-//                names.write(",");
-//                names.write(lastNames.get(random.nextInt(lastNames.size() - 1)));
-//                names.write(",");
-//                names.write(Sex.NOT_SPECIFIED.toString());
-//                names.write("\n");
-//            }
-//        }
-//    }
 
 }

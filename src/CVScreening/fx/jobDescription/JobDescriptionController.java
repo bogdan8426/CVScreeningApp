@@ -1,6 +1,9 @@
-package CVScreening.JobDescription;
+package CVScreening.fx.jobDescription;
 
-import CVScreening.DataModel.*;
+import CVScreening.model.CV;
+import CVScreening.model.JobDescription;
+import CVScreening.model.helpers.Domain;
+import CVScreening.model.helpers.JobLevel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -19,7 +22,6 @@ public class JobDescriptionController {
     public ChoiceBox<JobLevel> jobLevelChoice;
     @FXML
     public Slider minStudyYearsSlider;
-
     @FXML
     public CheckBox leadBackgroundCheckBox;
     @FXML
@@ -33,36 +35,34 @@ public class JobDescriptionController {
     private ObservableList<CV> cvs;
 
     @FXML
-    public void initialize(ObservableList<CV> cvs){
+    public void initialize(ObservableList<CV> cvs) {
         this.cvs = cvs;
         jobLevelChoice.setItems(FXCollections.observableArrayList(JobLevel.values()));
         jobLevelChoice.setValue(JobLevel.JUNIOR);
 
         Set<String> universities = new HashSet<>();
-        for(CV cv: cvs){
-            for(Education education: cv.getEducation()){
-                universities.add(education.getUniversityName());
-            }
-        }
+        cvs.forEach(cv -> cv.getEducation()
+                .forEach(education -> universities.add(education.getUniversityName()))
+        );
+
         universityChoice.setItems(FXCollections.observableArrayList(universities));
 
     }
 
     public List<CV> processResults(Domain selectedDomain, String selectedPosition) {
-        JobDescription jobDescription = new JobDescription(selectedDomain,selectedPosition,
+        JobDescription jobDescription = new JobDescription(selectedDomain, selectedPosition,
                 jobLevelChoice.getValue(), (int) minStudyYearsSlider.getValue());
         jobDescription.setHasLeadershipExperience(leadBackgroundCheckBox.isSelected());
         jobDescription.setJobsChanged((int) jobsChangedSlider.getValue());
 
-        if(!universityChoice.getSelectionModel().isEmpty()){
+        if (!universityChoice.getSelectionModel().isEmpty()) {
             jobDescription.setSpecificUniversity(universityChoice.getValue());
         }
 
-        for(CV cv: cvs){
-            cv.computeScore(jobDescription);
-        }
+        cvs.forEach(cv -> cv.computeScore(jobDescription));
+
         return new SortedList<>(cvs, Comparator.comparingDouble(cv -> -cv.getScore()));
 
-}
+    }
 
 }
