@@ -14,7 +14,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -29,15 +28,13 @@ import java.util.logging.Logger;
 public class SelectionController {
 
     @FXML
-    public ListView<Domain> domainsListView;
+    private ListView<Domain> domainsListView;
     @FXML
-    public AnchorPane centerAnchorPane;
+    private VBox mainVBox;
     @FXML
-    public VBox mainVBox;
+    private HBox centerContent;
     @FXML
-    public HBox centerContent;
-    @FXML
-    public Label centerTitle;
+    private Label centerTitle;
 
     private static ObservableList<CV> cvs;
     private ListView<String> positionsListView = new ListView<>();
@@ -45,7 +42,7 @@ public class SelectionController {
     private static final Logger log = Logger.getLogger(SelectionController.class.getName());
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         domainsListView.setItems(FXCollections.observableArrayList(Domain.values()));
     }
 
@@ -75,7 +72,7 @@ public class SelectionController {
         hireButton.setOnAction(this::showJobDescriptionDialog);
 
         hireButton.setAlignment(Pos.CENTER);
-        hireButton.setMinSize(80,50);
+        hireButton.setMinSize(80, 50);
         centerContent.getChildren().add(hireButton);
     }
 
@@ -90,7 +87,7 @@ public class SelectionController {
         dialog.setHeaderText("Use this dialog to create a new job description item");
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("../JobDescription/jobDescription.fxml"));
-        try{
+        try {
             dialog.getDialogPane().setContent(fxmlLoader.load());
             JobDescriptionController controller = fxmlLoader.getController();
             controller.initialize(cvs);
@@ -99,7 +96,7 @@ public class SelectionController {
             dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
             Optional<ButtonType> result = dialog.showAndWait();
-            if(result.isPresent() && result.get() == ButtonType.OK){
+            if (result.isPresent() && result.get() == ButtonType.OK) {
                 List<CV> results = controller.processResults(selectedDomain, selectedPosition);
                 Stage stage = (Stage) mainVBox.getScene().getWindow();
 
@@ -109,17 +106,17 @@ public class SelectionController {
                     loader.setLocation(getClass().getResource("../Results/results.fxml"));
                     Parent root = loader.load();
                     ResultsController resultsController = loader.getController();
-                    resultsController.initialize(results,selectedPosition);
+                    resultsController.initialize(results, selectedPosition);
                     Scene scene = new Scene(root, 900, 550);
                     stage.setScene(scene);
                     stage.centerOnScreen();
-                    stage.setOnCloseRequest(ev->resultsController.handleExit());
+                    stage.setOnCloseRequest(ev -> resultsController.handleExit());
                     stage.show();
                 } catch (IOException e) {
                     log.severe("Couldn't load the results page!");
                 }
             }
-        } catch(IOException e){
+        } catch (IOException e) {
             log.severe("Couldn't load the job description dialog!");
         }
     }

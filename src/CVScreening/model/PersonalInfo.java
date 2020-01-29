@@ -3,7 +3,6 @@ package CVScreening.model;
 import CVScreening.model.helpers.Sex;
 
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class PersonalInfo {
 
@@ -76,12 +75,16 @@ public class PersonalInfo {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBirthday(), getSex());
+        final int prime = 31;
+        int result = 1;
+        result = result * prime + birthday.hashCode();
+        result = result * prime + sex.hashCode();
+        return result;
     }
 
     @Override
     public String toString() {
-        return  "\n\t" + firstName  + " " + lastName  +
+        return "\n\t" + firstName + " " + lastName +
                 "\n\t" + phoneNumber +
                 "\n\tBorn: " + birthday +
                 "\n\tSex: " + sex;

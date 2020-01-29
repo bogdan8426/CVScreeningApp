@@ -9,28 +9,29 @@ public class TimeInterval {
     private LocalDate end;
     private Period period;
 
-    private TimeInterval(){}
+    private TimeInterval() {
+    }
 
     private TimeInterval(LocalDate start, LocalDate end) {
         this.start = start;
         this.end = end;
-        this.period = Period.between(start,end);
+        this.period = Period.between(start, end);
     }
 
-    public LocalDate getStartDate(){
+    public LocalDate getStartDate() {
         return start;
     }
 
-    public LocalDate getEndDate(){
+    public LocalDate getEndDate() {
         return end;
     }
 
-    public Period getPeriod(){
+    public Period getPeriod() {
         return period;
     }
 
-    public static TimeInterval between(LocalDate start, LocalDate end){
-        return new TimeInterval(start,end);
+    public static TimeInterval between(LocalDate start, LocalDate end) {
+        return new TimeInterval(start, end);
     }
 
     public static TimeInterval parse(String timeInterval) {
@@ -42,9 +43,9 @@ public class TimeInterval {
 
     @Override
     public String toString() {
-        return "From "+ start +
+        return "From " + start +
                 " to " + end +
-                " (" + (period.getYears() > 0 ? period.getYears()+ " years and ":"") +
+                " (" + (period.getYears() > 0 ? period.getYears() + " years and " : "") +
                 period.getMonths() + " months)";
     }
 }

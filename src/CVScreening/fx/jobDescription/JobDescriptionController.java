@@ -8,7 +8,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 
 import java.util.Comparator;
 import java.util.HashSet;
@@ -17,20 +20,17 @@ import java.util.Set;
 
 public class JobDescriptionController {
     @FXML
-    public TextArea jobBrief;
+    private TextArea jobBrief;
     @FXML
-    public ChoiceBox<JobLevel> jobLevelChoice;
+    private ChoiceBox<JobLevel> jobLevelChoice;
     @FXML
-    public Slider minStudyYearsSlider;
+    private Slider minStudyYearsSlider;
     @FXML
-    public CheckBox leadBackgroundCheckBox;
+    private CheckBox leadBackgroundCheckBox;
     @FXML
-    public Slider jobsChangedSlider;
+    private Slider jobsChangedSlider;
     @FXML
-    public ChoiceBox<String> universityChoice;
-    @FXML
-    public DialogPane mainDialogPane;
-
+    private ChoiceBox<String> universityChoice;
 
     private ObservableList<CV> cvs;
 

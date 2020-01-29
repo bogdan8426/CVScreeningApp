@@ -3,37 +3,47 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<DialogPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainDialogPane"
-            xmlns="http://javafx.com/javafx/8.0.171" fx:controller="CVScreening.fx.jobDescription.JobDescriptionController">
+<DialogPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/8.0.171"
+            fx:controller="CVScreening.fx.jobDescription.JobDescriptionController">
 
     <content>
         <GridPane hgap="10" vgap="10">
 
-            <Label text="Job Brief: " GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER_RIGHT" />
-            <TextArea wrapText="true" fx:id="jobBrief" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="Job Brief: " GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER_RIGHT"/>
+            <TextArea wrapText="true" fx:id="jobBrief" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
 
-            <Label text="Mandatory requirements" style="-fx-font-weight: bold; -fx-font-size: 20" GridPane.rowIndex="1" GridPane.columnSpan="2"/>
+            <Label text="Mandatory requirements" style="-fx-font-weight: bold; -fx-font-size: 20" GridPane.rowIndex="1"
+                   GridPane.columnSpan="2"/>
 
-            <Label text="Job level*: "  GridPane.columnIndex="0" GridPane.rowIndex="2" alignment="CENTER_RIGHT" />
-            <ChoiceBox fx:id="jobLevelChoice" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Job level*: " GridPane.columnIndex="0" GridPane.rowIndex="2" alignment="CENTER_RIGHT"/>
+            <ChoiceBox fx:id="jobLevelChoice" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
 
-            <Label text="Minimum study years*: "  GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER_RIGHT" />
-            <Slider fx:id="minStudyYearsSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" minorTickCount="0" showTickLabels="true"
-                    showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Minimum study years*: " GridPane.columnIndex="0" GridPane.rowIndex="3"
+                   alignment="CENTER_RIGHT"/>
+            <Slider fx:id="minStudyYearsSlider" blockIncrement="1.0" majorTickUnit="1.0" max="6.0" minorTickCount="0"
+                    showTickLabels="true"
+                    showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-            <Label text="Nice to have" style="-fx-font-weight: bold; -fx-font-size: 20" GridPane.rowIndex="4" GridPane.columnSpan="2"/>
+            <Label text="Nice to have" style="-fx-font-weight: bold; -fx-font-size: 20" GridPane.rowIndex="4"
+                   GridPane.columnSpan="2"/>
 
-            <Label text="Leadership background: "  GridPane.columnIndex="0" GridPane.rowIndex="5" alignment="CENTER_RIGHT" />
-            <CheckBox fx:id="leadBackgroundCheckBox" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label text="Leadership background: " GridPane.columnIndex="0" GridPane.rowIndex="5"
+                   alignment="CENTER_RIGHT"/>
+            <CheckBox fx:id="leadBackgroundCheckBox" mnemonicParsing="false" GridPane.columnIndex="1"
+                      GridPane.rowIndex="5"/>
 
-            <Label text="Jobs change frequency (max jobs changed): "  GridPane.columnIndex="0" GridPane.rowIndex="6" alignment="CENTER_RIGHT" />
-            <Slider fx:id="jobsChangedSlider" blockIncrement="1.0" majorTickUnit="2.0" max="10.0" minorTickCount="1" showTickLabels="true"
-                    showTickMarks="true" snapToTicks="true" value="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label text="Jobs change frequency (max jobs changed): " GridPane.columnIndex="0" GridPane.rowIndex="6"
+                   alignment="CENTER_RIGHT"/>
+            <Slider fx:id="jobsChangedSlider" blockIncrement="1.0" majorTickUnit="2.0" max="10.0" minorTickCount="1"
+                    showTickLabels="true"
+                    showTickMarks="true" snapToTicks="true" value="10.0" GridPane.columnIndex="1"
+                    GridPane.rowIndex="6"/>
 
-            <Label text="Studied at: " GridPane.columnIndex="0" GridPane.rowIndex="7" alignment="CENTER_RIGHT" />
-            <ChoiceBox fx:id="universityChoice" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label text="Studied at: " GridPane.columnIndex="0" GridPane.rowIndex="7" alignment="CENTER_RIGHT"/>
+            <ChoiceBox fx:id="universityChoice" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 
-            </GridPane>
+        </GridPane>
 
     </content>
 </DialogPane>

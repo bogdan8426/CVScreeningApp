@@ -20,12 +20,12 @@ class CVWriter {
 
     private List<CV> cvs;
 
-    public CVWriter(List<CV> cvs){
+    public CVWriter(List<CV> cvs) {
         this.cvs = cvs;
     }
 
-    public void saveCVs(){
-        for (CV cv: cvs) {
+    public void saveCVs() {
+        for (CV cv : cvs) {
             try {
                 String path = "C:\\Users\\Bogdan\\Desktop\\Facultate\\Java advanced\\CV Screening Application\\src\\CVScreening\\CVs\\"
                         + getFileName(cv);
@@ -62,13 +62,13 @@ class CVWriter {
     private void saveCV(XMLEventWriter eventWriter, XMLEventFactory eventFactory, CV cv)
             throws XMLStreamException {
 
-        saveInfo(eventWriter,eventFactory,cv.getInfo());
-        saveEducation(eventWriter,eventFactory, cv.getEducation());
-        saveExperience(eventWriter,eventFactory, cv.getExperience());
+        saveInfo(eventWriter, eventFactory, cv.getInfo());
+        saveEducation(eventWriter, eventFactory, cv.getEducation());
+        saveExperience(eventWriter, eventFactory, cv.getExperience());
     }
 
     private void saveExperience(XMLEventWriter eventWriter, XMLEventFactory eventFactory, List<Experience> experiences)
-            throws XMLStreamException{
+            throws XMLStreamException {
         XMLEvent end = eventFactory.createDTD("\n");
         XMLEvent tab = eventFactory.createDTD("\t");
 
@@ -81,7 +81,7 @@ class CVWriter {
         eventWriter.add(end);
 
         // Write the different nodes
-        for(Experience experience: experiences){
+        for (Experience experience : experiences) {
             // create experience open tag
             configStartElement = eventFactory.createStartElement("",
                     "", EXPERIENCE.toString());
@@ -121,7 +121,7 @@ class CVWriter {
         eventWriter.add(end);
 
         // Write the different nodes
-        for(Education education: educations){
+        for (Education education : educations) {
             // create education open tag
             configStartElement = eventFactory.createStartElement("",
                     "", EDUCATION.toString());
@@ -193,7 +193,7 @@ class CVWriter {
         eventWriter.add(end);
     }
 
-    private String getFileName(CV cv){
+    private String getFileName(CV cv) {
         return "CV_" + cv.getInfo().getFirstName() + "_" + cv.getInfo().getLastName() + ".xml";
     }
 }

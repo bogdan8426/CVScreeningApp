@@ -5,7 +5,4 @@ public class CVFilesWriteException extends CVGeneratorException {
         super(message);
     }
 
-    public CVFilesWriteException(String message, Exception e){
-        super(message, e);
-    }
 }

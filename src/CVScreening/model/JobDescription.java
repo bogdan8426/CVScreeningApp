@@ -16,7 +16,7 @@ public class JobDescription {
     private int jobsChanged = -1;
     private String specificUniversity;
 
-    public boolean hasOptionals(){
+    public boolean hasOptionals() {
         return hasLeadershipExperience || jobsChanged > 0 || specificUniversity != null;
     }
 

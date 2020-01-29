@@ -3,13 +3,12 @@ package CVScreening.message;
 import CVScreening.model.CV;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Message implements Serializable {
 
-	private static final long serialVersionUID = -3686472195559526951L;
-	private String from;
+    private static final long serialVersionUID = -3686472195559526951L;
+    private String from;
     private CV to;
     private String title, body;
 
@@ -48,17 +47,17 @@ public class Message implements Serializable {
         this.body = body;
         return this;
     }
-    
+
     @Override
     public String toString() {
-    	String to = getTo().getInfo().getLastName().toLowerCase().trim() +
+        String to = getTo().getInfo().getLastName().toLowerCase().trim() +
                 new Random().nextInt(100) +
                 "@gmail.com";
 
-    	return "\n\tSEND MESSAGE:" + "\n" +
-    			"\tFrom: " + getFrom() + "\n" +
-    			"\tTo: " + to + "\n" +
-    			"\tTitle: " + getTitle() + "\n" +
-    			"\tBody: " + getBody() + "\n";
+        return "\n\tSEND MESSAGE:" + "\n" +
+                "\tFrom: " + getFrom() + "\n" +
+                "\tTo: " + to + "\n" +
+                "\tTitle: " + getTitle() + "\n" +
+                "\tBody: " + getBody() + "\n";
     }
 }

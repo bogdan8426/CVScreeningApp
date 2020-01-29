@@ -65,10 +65,10 @@ public class Experience {
 
     @Override
     public String toString() {
-        return  "\n\n\t" + timeInterval +
+        return "\n\n\t" + timeInterval +
                 "\n\t" + position +
                 "\n\t\t" + description +
                 "\n\t" + company +
-                "\n\t" + domain ;
+                "\n\t" + domain;
     }
 }

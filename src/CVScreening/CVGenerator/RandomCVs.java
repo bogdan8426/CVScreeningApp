@@ -1,8 +1,11 @@
 package CVScreening.CVGenerator;
 
 import CVScreening.CVGenerator.root.InputReader;
-import CVScreening.model.*;
 import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.model.CV;
+import CVScreening.model.Education;
+import CVScreening.model.Experience;
+import CVScreening.model.PersonalInfo;
 import CVScreening.model.helpers.Domain;
 import CVScreening.model.helpers.Sex;
 import CVScreening.model.helpers.TimeInterval;
@@ -23,9 +26,9 @@ class RandomCVs {
         try {
             loadCVsFromTextFiles();
         } catch (FileNotFoundException e) {
-            throw new CVFilesReadException("Problem generating list of random cvs, couldn't find txt file! ",e);
+            throw new CVFilesReadException("Problem generating list of random cvs, couldn't find txt file! ", e);
         }
-        if(!cvs.isEmpty()){
+        if (!cvs.isEmpty()) {
             Logger.getLogger(CVGenerator.class.getName()).info("CVs generated successfully!");
         }
         return cvs;
@@ -33,7 +36,7 @@ class RandomCVs {
 
     private void loadCVsFromTextFiles() throws FileNotFoundException {
         Map<String, Sex> names = reader.getNames();
-        for(String name: names.keySet()) {
+        for (String name : names.keySet()) {
             cvs.add(getCV(name, names.get(name)));
         }
     }
@@ -41,13 +44,13 @@ class RandomCVs {
     private CV getCV(String name, Sex sex) throws FileNotFoundException {
         PersonalInfo info = getInfo(name, sex);
         List<Education> educations = getRandomEducationList(info.getBirthday());
-        List<Experience> experiences = getRandomExperienceList(educations.get(educations.size()-1).getDomain(),
-                educations.get(educations.size()-1).getTimeInterval().getEndDate());
+        List<Experience> experiences = getRandomExperienceList(educations.get(educations.size() - 1).getDomain(),
+                educations.get(educations.size() - 1).getTimeInterval().getEndDate());
 
-        return new CV(info, educations,experiences);
+        return new CV(info, educations, experiences);
     }
 
-    private PersonalInfo getInfo(String name, Sex sex){
+    private PersonalInfo getInfo(String name, Sex sex) {
         String[] fullName = name.split(",");
         return new PersonalInfo(fullName[0], fullName[1], getRandomPhoneNumber(), getRandomBirthday(), sex);
     }
@@ -55,16 +58,16 @@ class RandomCVs {
     private List<Education> getRandomEducationList(LocalDate birthday) throws FileNotFoundException {
         List<Education> educations = new LinkedList<>();
         int noSections = random.nextInt(1) + 2;
-        LocalDate collegeStart = LocalDate.of(birthday.getYear()+19,
+        LocalDate collegeStart = LocalDate.of(birthday.getYear() + 19,
                 Month.OCTOBER,
-                random.nextInt(6)+1);
+                random.nextInt(6) + 1);
         List<String> universities = reader.getUniversities();
         Domain[] domains = Domain.values();
-        for(int i = 1; i<=noSections; i++){
+        for (int i = 1; i <= noSections; i++) {
             Domain domain = domains[random.nextInt(domains.length)];
 
-            educations.add(new Education(getEducationPeriod(collegeStart.plusYears(i-1)),
-                    universities.get(random.nextInt(universities.size()-1)),
+            educations.add(new Education(getEducationPeriod(collegeStart.plusYears(i - 1)),
+                    universities.get(random.nextInt(universities.size() - 1)),
                     domain));
         }
         return educations;
@@ -75,17 +78,19 @@ class RandomCVs {
         int noSections = random.nextInt(3) + 2;
         Map<Domain, Map<String, String>> jobs = reader.getJobs();
         List<String> companies = reader.getCompanies();
-        for(int i= 1; i<=noSections; i++){
+        for (int i = 1; i <= noSections; i++) {
             TimeInterval timeInterval = getExperiencePeriod(studyEndDate);
-            if(i == 1) { timeInterval = TimeInterval.between(studyEndDate, studyEndDate.plusMonths(random.nextInt(6)+1));}
-            Domain domain = new ArrayList<>(jobs.keySet()).get(random.nextInt(jobs.size()-1));
-            if(i > 1 && !domain.equals(studyDomain)){
+            if (i == 1) {
+                timeInterval = TimeInterval.between(studyEndDate, studyEndDate.plusMonths(random.nextInt(6) + 1));
+            }
+            Domain domain = new ArrayList<>(jobs.keySet()).get(random.nextInt(jobs.size() - 1));
+            if (i > 1 && !domain.equals(studyDomain)) {
                 domain = studyDomain;
             }
             Map<String, String> positionDescription = jobs.get(domain);
-            String position = new ArrayList<>(positionDescription.keySet()).get(random.nextInt(positionDescription.size()-1));
+            String position = new ArrayList<>(positionDescription.keySet()).get(random.nextInt(positionDescription.size() - 1));
             String description = positionDescription.get(position);
-            experiences.add(new Experience(timeInterval, position, description, companies.get(random.nextInt(companies.size()-1)), domain));
+            experiences.add(new Experience(timeInterval, position, description, companies.get(random.nextInt(companies.size() - 1)), domain));
 
         }
 
@@ -94,8 +99,8 @@ class RandomCVs {
 
     private LocalDate getRandomBirthday() {
         return LocalDate.of(1950 + random.nextInt(52),
-                Month.of(random.nextInt(11)+1),
-                random.nextInt(28)+1);
+                Month.of(random.nextInt(11) + 1),
+                random.nextInt(28) + 1);
     }
 
     private String getRandomPhoneNumber() {
@@ -108,15 +113,15 @@ class RandomCVs {
 
     }
 
-    private TimeInterval getEducationPeriod(LocalDate start){
-        int years = random.nextInt(2)+3;
+    private TimeInterval getEducationPeriod(LocalDate start) {
+        int years = random.nextInt(2) + 3;
         return TimeInterval.between(start, start.plusYears(years).minusMonths(3).plusDays(14));
     }
 
-    private TimeInterval getExperiencePeriod(LocalDate start){
-        int years = start.getYear()+random.nextInt(20) +1;
+    private TimeInterval getExperiencePeriod(LocalDate start) {
+        int years = start.getYear() + random.nextInt(20) + 1;
         int months = random.nextInt(6) + 6;
         int days = random.nextInt(27) + 1;
-        return TimeInterval.between(start.plusMonths(3), LocalDate.of(years,months,days));
+        return TimeInterval.between(start.plusMonths(3), LocalDate.of(years, months, days));
     }
 }

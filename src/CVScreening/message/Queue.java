@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Queue implements Serializable {
 
-	private static final long serialVersionUID = -367534955230149744L;
-	
-	private List<Message> messages = Collections.synchronizedList(new LinkedList<>());
-	
+    private static final long serialVersionUID = -367534955230149744L;
+
+    private List<Message> messages = Collections.synchronizedList(new LinkedList<>());
+
     public void add(Message message) {
         messages.add(message);
     }
@@ -21,5 +21,5 @@ public class Queue implements Serializable {
         }
         return null;
     }
-    
+
 }

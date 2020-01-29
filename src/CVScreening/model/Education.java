@@ -8,7 +8,8 @@ public class Education {
     private String universityName;
     private Domain domain;
 
-    public Education(){}
+    public Education() {
+    }
 
     public Education(TimeInterval timeInterval, String universityName, Domain domain) {
         this.timeInterval = timeInterval;
@@ -42,7 +43,7 @@ public class Education {
 
     @Override
     public String toString() {
-        return  "\n\n\t" + timeInterval +
+        return "\n\n\t" + timeInterval +
                 "\n\t" + universityName +
                 "\n\t" + domain;
     }

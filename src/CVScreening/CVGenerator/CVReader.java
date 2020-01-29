@@ -1,7 +1,10 @@
 package CVScreening.CVGenerator;
 
-import CVScreening.model.*;
 import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.model.CV;
+import CVScreening.model.Education;
+import CVScreening.model.Experience;
+import CVScreening.model.PersonalInfo;
 import CVScreening.model.helpers.Domain;
 import CVScreening.model.helpers.Sex;
 import CVScreening.model.helpers.TimeInterval;
@@ -57,13 +60,13 @@ class CVReader {
 
                 if (event.isStartElement()) {
                     String tagName = event.asStartElement().getName().getLocalPart();
-                    if(tagName.equals(INFO.toString())){
+                    if (tagName.equals(INFO.toString())) {
                         info = loadInfo(eventReader);
                     }
-                    if(tagName.equals(EDUCATION.toString())){
+                    if (tagName.equals(EDUCATION.toString())) {
                         educations.add(loadEducation(eventReader));
                     }
-                    if(tagName.equals(EXPERIENCE.toString())){
+                    if (tagName.equals(EXPERIENCE.toString())) {
                         experiences.add(loadExperience(eventReader));
                     }
                 }
@@ -87,7 +90,7 @@ class CVReader {
             XMLEvent event = eventReader.nextEvent();
             String tagName;
 
-            if(event.isStartElement()) {
+            if (event.isStartElement()) {
                 tagName = event.asStartElement().getName().getLocalPart();
                 event = eventReader.nextEvent();
                 switch (Constant.valueOf(tagName.toUpperCase())) {
@@ -111,9 +114,9 @@ class CVReader {
                 }
             }
 
-            if (event.isEndElement()){
+            if (event.isEndElement()) {
                 tagName = event.asEndElement().getName().getLocalPart();
-                if(tagName.equals(INFO.toString())) {
+                if (tagName.equals(INFO.toString())) {
                     return info;
                 }
             }
@@ -127,7 +130,7 @@ class CVReader {
             XMLEvent event = eventReader.nextEvent();
             String tagName;
 
-            if(event.isStartElement()) {
+            if (event.isStartElement()) {
                 tagName = event.asStartElement().getName().getLocalPart();
                 event = eventReader.nextEvent();
                 switch (Constant.valueOf(tagName.toUpperCase())) {
@@ -145,9 +148,9 @@ class CVReader {
                 }
             }
 
-            if (event.isEndElement()){
-                 tagName = event.asEndElement().getName().getLocalPart();
-                if(tagName.equals(EDUCATION.toString())) {
+            if (event.isEndElement()) {
+                tagName = event.asEndElement().getName().getLocalPart();
+                if (tagName.equals(EDUCATION.toString())) {
                     return education;
                 }
             }
@@ -161,7 +164,7 @@ class CVReader {
             XMLEvent event = eventReader.nextEvent();
             String tagName;
 
-            if(event.isStartElement()) {
+            if (event.isStartElement()) {
                 tagName = event.asStartElement().getName().getLocalPart();
                 event = eventReader.nextEvent();
                 switch (Constant.valueOf(tagName.toUpperCase())) {
@@ -185,9 +188,9 @@ class CVReader {
                 }
             }
 
-            if (event.isEndElement()){
+            if (event.isEndElement()) {
                 tagName = event.asEndElement().getName().getLocalPart();
-                if(tagName.equals(EXPERIENCE.toString())) {
+                if (tagName.equals(EXPERIENCE.toString())) {
                     return experience;
                 }
             }

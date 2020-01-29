@@ -1,9 +1,9 @@
 package CVScreening.fx.results;
 
-import CVScreening.model.CV;
 import CVScreening.message.Message;
 import CVScreening.message.MessageException;
 import CVScreening.message.MessageService;
+import CVScreening.model.CV;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 import java.awt.*;
 import java.io.File;
@@ -28,15 +27,15 @@ import java.util.logging.Logger;
 
 public class ResultsController {
     @FXML
-    public VBox mainVBox;
+    private VBox mainVBox;
     @FXML
-    public HBox centerContent;
+    private HBox centerContent;
     @FXML
-    public Label positionSearched;
+    private Label positionSearched;
     @FXML
-    public Label noCVs;
+    private Label noCVs;
     @FXML
-    public Label noMatches;
+    private Label noMatches;
     @FXML
     private List<CV> cvs;
 
@@ -45,7 +44,7 @@ public class ResultsController {
 
     public void initialize(List<CV> cvs, String selectedPosition) {
         this.cvs = cvs;
-        positionSearched.setText(" - Searched for a " + selectedPosition +"... \n");
+        positionSearched.setText(" - Searched for a " + selectedPosition + "... \n");
         positionSearched.setMaxWidth(150.0);
         positionSearched.setWrapText(true);
         displayResults();
@@ -88,55 +87,50 @@ public class ResultsController {
         noCVs.setMaxWidth(150.0);
         noCVs.setWrapText(true);
 
-        long count = cvs.stream().map(CV::getScore).filter(score -> score>=0.5).count();
+        long count = cvs.stream().map(CV::getScore).filter(score -> score >= 0.5).count();
         noMatches.setText(" - Found " + count + " candidates with >50% match.\n");
         noMatches.setMaxWidth(150.0);
         noMatches.setWrapText(true);
     }
 
     private EventHandler<ActionEvent> sendMessages(CV cv) {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    messageService.
-                            sendNotification(new Message()
-                                    .setFrom("Recruiter")
-                                    .setTo(cv)
-                                    .setTitle("Hi, " + cv.getInfo().getFirstName() + "!")
-                                    .setBody("Your cv matches " + (int) (cv.getScore()*100) +"% to our ideal candidate," +
-                                            "\n\t\t" + "Would you like to work for our company?"));
-                } catch (MessageException e) {
-                    log.warning("Message sending failed! ");
-                }
+        return event -> {
+            try {
+                messageService.
+                        sendNotification(new Message()
+                                .setFrom("Recruiter")
+                                .setTo(cv)
+                                .setTitle("Hi, " + cv.getInfo().getFirstName() + "!")
+                                .setBody("Your cv matches " + (int) (cv.getScore() * 100) + "% to our ideal candidate," +
+                                        "\n\t\t" + "Would you like to work for our company?"));
+            } catch (MessageException e) {
+                log.warning("Message sending failed! ");
             }
         };
     }
 
     private EventHandler<? super MouseEvent> showCVDialog(CV cv) {
-        return new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(!Desktop.isDesktopSupported()){
-                    log.severe("Desktop is not supported");
-                    return;
-                }
+        return (EventHandler<MouseEvent>) event -> {
+            if (!Desktop.isDesktopSupported()) {
+                log.severe("Desktop is not supported");
+                return;
+            }
 
-                String path = "C:\\Users\\Bogdan\\Desktop\\Facultate\\Java advanced\\CV Screening Application\\src\\CVScreening\\CVs\\"
-                        +"CV_" + cv.getInfo().getFirstName() + "_" + cv.getInfo().getLastName() + ".xml";
-                File file = new File(path);
-                Desktop desktop = Desktop.getDesktop();
-                if(file.exists()) {
-                    try {
-                        desktop.open(file);
-                    } catch (IOException e) {
-                        log.severe("Could not open cv file, please open manually.");
-                    }
+            String path = "C:\\Users\\Bogdan\\Desktop\\Facultate\\Java advanced\\CV Screening Application\\src\\CVScreening\\CVs\\"
+                    + "CV_" + cv.getInfo().getFirstName() + "_" + cv.getInfo().getLastName() + ".xml";
+            File file = new File(path);
+            Desktop desktop = Desktop.getDesktop();
+            if (file.exists()) {
+                try {
+                    desktop.open(file);
+                } catch (IOException e) {
+                    log.severe("Could not open cv file, please open manually.");
                 }
             }
         };
     }
 
+    @FXML
     public void showSelectionScreen() {
         Stage stage = (Stage) mainVBox.getScene().getWindow();
 
@@ -151,6 +145,7 @@ public class ResultsController {
         }
     }
 
+    @FXML
     public void handleExit() {
         messageService.close();
         Platform.exit();

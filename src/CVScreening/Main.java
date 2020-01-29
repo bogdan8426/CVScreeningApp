@@ -10,10 +10,10 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("fx/home/home.fxml"));
         primaryStage.setTitle("CV Screening Application");
-        primaryStage.setScene(new Scene(root, 900,300));
+        primaryStage.setScene(new Scene(root, 900, 300));
         primaryStage.centerOnScreen();
         Image applicationIcon = new Image(getClass().getResourceAsStream("/assets/logo.png"));
         primaryStage.getIcons().add(applicationIcon);

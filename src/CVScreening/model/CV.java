@@ -1,12 +1,6 @@
 package CVScreening.model;
 
-import CVScreening.model.helpers.Domain;
-import CVScreening.model.helpers.JobLevel;
-
-import java.time.Period;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class CV {
 
@@ -78,7 +72,10 @@ public class CV {
 
     @Override
     public int hashCode() {
-        return Objects.hash(info);
+        final int prime = 31;
+        int result = 1;
+        result = result * prime + info.hashCode();
+        return result;
     }
 
 }

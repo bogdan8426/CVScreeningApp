@@ -19,13 +19,14 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class HomeController {
 
     @FXML
     private GridPane gridPane;
     @FXML
-    public BorderPane mainBorderPane;
+    private BorderPane mainBorderPane;
 
     private CVGenerator generator = new CVGenerator();
 
@@ -40,7 +41,7 @@ public class HomeController {
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override
             public ObservableList<CV> call() throws CVFilesReadException {
-                    return generator.loadCVs();
+                return generator.loadCVs();
             }
         };
 
@@ -54,8 +55,7 @@ public class HomeController {
                 stage.centerOnScreen();
                 stage.show();
             } catch (IOException ex) {
-                //TODO: throw exception
-                ex.printStackTrace();
+                Logger.getLogger(HomeController.class.getName()).severe("Could not load selection screen!");
             }
         });
 
@@ -79,16 +79,17 @@ public class HomeController {
         task.setOnSucceeded(e -> {
             indicator.setProgress(1.0f);
             GridPane.setHalignment(indicator, HPos.CENTER);
-            loadCVfiles();});
+            loadCVfiles();
+        });
 
         new Thread(task).start();
 
     }
 
-    private ProgressIndicator loadingAnimation(int columnIndex){
+    private ProgressIndicator loadingAnimation(int columnIndex) {
         ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setMaxSize(20,20);
-        gridPane.add(progressIndicator,columnIndex,2);
+        progressIndicator.setMaxSize(20, 20);
+        gridPane.add(progressIndicator, columnIndex, 2);
         GridPane.setHalignment(progressIndicator, HPos.CENTER);
         return progressIndicator;
     }

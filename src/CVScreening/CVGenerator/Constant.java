@@ -12,7 +12,7 @@ enum Constant {
         return this.name().toLowerCase();
     }
 
-    String parse(XMLEvent event){
+    String parse(XMLEvent event) {
         return event.asCharacters().getData();
     }
 
