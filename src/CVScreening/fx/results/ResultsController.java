@@ -151,4 +151,19 @@ public class ResultsController {
         Platform.exit();
     }
 
+    public void setCenterContent(HBox centerContent) {
+        this.centerContent = centerContent;
+    }
+
+    public void setPositionSearched(Label positionSearched) {
+        this.positionSearched = positionSearched;
+    }
+
+    public void setNoCVs(Label noCVs) {
+        this.noCVs = noCVs;
+    }
+
+    public void setNoMatches(Label noMatches) {
+        this.noMatches = noMatches;
+    }
 }

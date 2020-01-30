@@ -98,12 +98,12 @@ class Score {
          -> weight = 0.1/noOfOptionals;
 
      */
-    private void computeOptionalScore(CV cv, boolean hasLeadershipExperience, Integer jobsChanged, String specificUniversity) {
+    private void computeOptionalScore(CV cv, boolean hasLeadershipExperience, int jobsChanged, String specificUniversity) {
         List<Education> educations = cv.getEducation();
         List<Experience> experiences = cv.getExperience();
 
         int noOfOptionals = IntStream.of(hasLeadershipExperience ? 1 : 0,
-                jobsChanged != null ? 1 : 0,
+                jobsChanged > 0 ? 1 : 0,
                 specificUniversity != null ? 1 : 0).sum();
 
         value *= 0.9;
@@ -124,7 +124,7 @@ class Score {
         }
 
         // Jobs changed
-        if (jobsChanged != null && cv.getExperience().size() <= jobsChanged) {
+        if (jobsChanged > 0 && cv.getExperience().size() <= jobsChanged) {
             value += 0.1 / noOfOptionals;
         }
 

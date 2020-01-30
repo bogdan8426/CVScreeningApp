@@ -1,7 +1,11 @@
 package CVScreening.model.helpers;
 
+import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.exceptions.CVGeneratorException;
+
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeParseException;
 
 public class TimeInterval {
 
@@ -34,11 +38,15 @@ public class TimeInterval {
         return new TimeInterval(start, end);
     }
 
-    public static TimeInterval parse(String timeInterval) {
-        String[] split = timeInterval.split(" ");
-        LocalDate start = LocalDate.parse(split[1]);
-        LocalDate end = LocalDate.parse(split[3]);
-        return new TimeInterval(start, end);
+    public static TimeInterval parse(String timeInterval) throws CVFilesReadException {
+        try {
+            String[] split = timeInterval.split(" ");
+            LocalDate start = LocalDate.parse(split[1]);
+            LocalDate end = LocalDate.parse(split[3]);
+            return new TimeInterval(start, end);
+        }catch (DateTimeParseException e){
+            throw new CVFilesReadException("Could not parse specified time interval");
+        }
     }
 
     @Override

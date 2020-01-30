@@ -37,8 +37,8 @@ public class SelectionController {
     private Label centerTitle;
 
     private static ObservableList<CV> cvs;
-    private ListView<String> positionsListView = new ListView<>();
-    private Button hireButton = new Button("Hire!");
+    private ListView<String> positionsListView;
+    private Button hireButton;
     private static final Logger log = Logger.getLogger(SelectionController.class.getName());
 
     @FXML
@@ -48,6 +48,10 @@ public class SelectionController {
 
     public static void setCvs(ObservableList<CV> cvs) {
         SelectionController.cvs = cvs;
+    }
+
+    public static ObservableList<CV> getCvs(){
+        return cvs;
     }
 
     @FXML
@@ -64,11 +68,13 @@ public class SelectionController {
                 .forEach(experience -> positions.add(experience.getPosition()))
         );
 
+        positionsListView = new ListView<>();
         positionsListView.setMinWidth(400);
         positionsListView.setItems(FXCollections.observableArrayList(positions));
         centerContent.getChildren().add(positionsListView);
         positionsListView.getSelectionModel().selectFirst();
 
+        hireButton = new Button("Hire!");
         hireButton.setOnAction(this::showJobDescriptionDialog);
 
         hireButton.setAlignment(Pos.CENTER);
@@ -77,7 +83,7 @@ public class SelectionController {
     }
 
     @FXML
-    private void showJobDescriptionDialog(ActionEvent event) {
+    public void showJobDescriptionDialog(ActionEvent event) {
         Domain selectedDomain = domainsListView.getSelectionModel().getSelectedItem();
         String selectedPosition = positionsListView.getSelectionModel().getSelectedItem();
 
@@ -124,5 +130,29 @@ public class SelectionController {
     @FXML
     public void handleExit() {
         Platform.exit();
+    }
+
+    public void setDomainsListView(ListView<Domain> domainsListView) {
+        this.domainsListView = domainsListView;
+    }
+
+    public void setMainVBox(VBox mainVBox) {
+        this.mainVBox = mainVBox;
+    }
+
+    public void setCenterContent(HBox centerContent) {
+        this.centerContent = centerContent;
+    }
+
+    public void setCenterTitle(Label centerTitle) {
+        this.centerTitle = centerTitle;
+    }
+
+    public void setPositionsListView(ListView<String> positionsListView) {
+        this.positionsListView = positionsListView;
+    }
+
+    public void setHireButton(Button hireButton) {
+        this.hireButton = hireButton;
     }
 }

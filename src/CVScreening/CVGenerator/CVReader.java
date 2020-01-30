@@ -1,6 +1,7 @@
 package CVScreening.CVGenerator;
 
 import CVScreening.exceptions.CVFilesReadException;
+import CVScreening.exceptions.CVGeneratorException;
 import CVScreening.model.CV;
 import CVScreening.model.Education;
 import CVScreening.model.Experience;

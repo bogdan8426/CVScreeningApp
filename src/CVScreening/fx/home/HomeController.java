@@ -36,7 +36,7 @@ public class HomeController {
         gridPane.getChildren().get(1).setDisable(true);
         gridPane.getChildren().get(0).setDisable(true);
 
-        Stage stage = (Stage) mainBorderPane.getScene().getWindow();
+
 
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override
@@ -48,6 +48,7 @@ public class HomeController {
         task.setOnSucceeded(e -> {
             indicator.setProgress(1.0f);
             SelectionController.setCvs(task.getValue());
+            Stage stage = (Stage) mainBorderPane.getScene().getWindow();
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("../selection/selection.fxml"));
                 Scene scene = new Scene(root, 900, 550);
@@ -92,5 +93,13 @@ public class HomeController {
         gridPane.add(progressIndicator, columnIndex, 2);
         GridPane.setHalignment(progressIndicator, HPos.CENTER);
         return progressIndicator;
+    }
+
+    public void setGridPane(GridPane gridPane) {
+        this.gridPane = gridPane;
+    }
+
+    public void setMainBorderPane(BorderPane mainBorderPane) {
+        this.mainBorderPane = mainBorderPane;
     }
 }

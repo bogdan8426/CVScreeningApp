@@ -37,6 +37,10 @@ public class MessageService implements Runnable, Serializable {
         }
     }
 
+    public int getSentMessages() {
+        return sentMessages;
+    }
+
     private void sendMessage(Message message) {
         log.info(message.getTo().getInfo().getFirstName() + "  successfully received the message:");
         log.info(message.toString());

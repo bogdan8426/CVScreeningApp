@@ -65,4 +65,23 @@ public class JobDescriptionController {
 
     }
 
+    public void setJobLevelChoice(ChoiceBox<JobLevel> jobLevelChoice) {
+        this.jobLevelChoice = jobLevelChoice;
+    }
+
+    public void setMinStudyYearsSlider(Slider minStudyYearsSlider) {
+        this.minStudyYearsSlider = minStudyYearsSlider;
+    }
+
+    public void setLeadBackgroundCheckBox(CheckBox leadBackgroundCheckBox) {
+        this.leadBackgroundCheckBox = leadBackgroundCheckBox;
+    }
+
+    public void setJobsChangedSlider(Slider jobsChangedSlider) {
+        this.jobsChangedSlider = jobsChangedSlider;
+    }
+
+    public void setUniversityChoice(ChoiceBox<String> universityChoice) {
+        this.universityChoice = universityChoice;
+    }
 }
