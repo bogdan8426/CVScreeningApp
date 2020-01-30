@@ -133,7 +133,7 @@ public class ResultsController {
     @FXML
     public void showSelectionScreen() {
         Stage stage = (Stage) mainVBox.getScene().getWindow();
-
+        messageService.close();
         try {
             Parent root = FXMLLoader.load(getClass().getResource("../selection/selection.fxml"));
             Scene scene = new Scene(root, 900, 550);
