@@ -1,6 +1,8 @@
 package com.bogdanrotaru.cvscreeningapp.controllers;
 
 
+import com.bogdanrotaru.cvscreeningapp.exceptions.CVFilesReadException;
+import com.bogdanrotaru.cvscreeningapp.exceptions.CVGeneratorException;
 import com.bogdanrotaru.cvscreeningapp.model.CV;
 import com.bogdanrotaru.cvscreeningapp.model.JobDescription;
 import com.bogdanrotaru.cvscreeningapp.model.helpers.Domain;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CVController {
@@ -26,8 +29,8 @@ public class CVController {
     }
 
     @GetMapping("/generate")
-    public void generateResumes(Integer countPerDomain){
-        System.out.println("Generating ... " + countPerDomain);
+    public void generateResumes(Integer count) throws CVGeneratorException {
+        generatorService.generateCVs(count == null ? 10 : count);
     }
 
     @GetMapping("/jobDescription")
@@ -42,5 +45,15 @@ public class CVController {
     @PutMapping("/computeScores")
     public List<CV> computeScores(@RequestBody JobDescription jobDescription){
         return scoreService.computeScores(jobDescription);
+    }
+
+    @GetMapping("/status")
+    public Map<String, Object> getRepositoryStatus(){
+        return scoreService.getRepositoryStatus();
+    }
+
+    @GetMapping
+    public List<CV> getAllCVs(){
+        return scoreService.findAll();
     }
 }

@@ -10,7 +10,5 @@ import java.util.List;
 @Repository
 public interface CVRepository extends CrudRepository<CV, Long> {
 
-    default List<CV> findAll() {
-        return Collections.emptyList();
-    }
+    List<CV> findAll();
 }

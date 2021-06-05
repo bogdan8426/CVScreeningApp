@@ -22,9 +22,9 @@ class RandomCVs {
     private Random random = new Random();
     private InputReader reader = new InputReader();
 
-    public List<CV> generate() throws CVFilesReadException {
+    public List<CV> generate(int count) throws CVFilesReadException {
         try {
-            loadCVsFromTextFiles();
+            loadCVsFromTextFiles(count);
         } catch (FileNotFoundException e) {
             throw new CVFilesReadException("Problem generating list of random cvs, couldn't find txt file! ", e);
         }
@@ -34,8 +34,8 @@ class RandomCVs {
         return cvs;
     }
 
-    private void loadCVsFromTextFiles() throws FileNotFoundException {
-        Map<String, Sex> names = reader.getNames();
+    private void loadCVsFromTextFiles(int count) throws FileNotFoundException {
+        Map<String, Sex> names = reader.getNames(count);
         for (String name : names.keySet()) {
             cvs.add(getCV(name, names.get(name)));
         }

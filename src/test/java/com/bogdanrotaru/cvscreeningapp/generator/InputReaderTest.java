@@ -43,7 +43,7 @@ public class InputReaderTest {
 
     @Test
     public void namesTest() throws FileNotFoundException{
-        Map<String, Sex> names = reader.getNames();
+        Map<String, Sex> names = reader.getNames(3);
 
         assertNotNull(names);
         assertTrue(names.size() > 1400);

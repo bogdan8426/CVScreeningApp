@@ -33,13 +33,13 @@ public class CVGenerator {
     public CVGenerator() {
     }
 
-    public List<CV> generateRandomFiles() throws CVGeneratorException {
+    public List<CV> generateRandomFiles(int count) throws CVGeneratorException {
         log.info("Generating random CVs based on .txt files in root folder...");
 
-        List<CV> cvs = new RandomCVs().generate();
+        List<CV> cvs = new RandomCVs().generate(count);
 
-        log.info("Writing .xml files to the CVs directory...");
-        writeXMLs(cvs);
+//        log.info("Writing .xml files to the CVs directory...");
+//        writeXMLs(cvs);
         return cvs;
     }
 

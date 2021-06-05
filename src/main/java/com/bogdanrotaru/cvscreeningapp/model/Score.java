@@ -3,6 +3,8 @@ package com.bogdanrotaru.cvscreeningapp.model;
 
 import com.bogdanrotaru.cvscreeningapp.model.helpers.Domain;
 import com.bogdanrotaru.cvscreeningapp.model.helpers.JobLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.Period;
 import java.util.Arrays;
@@ -12,10 +14,14 @@ import java.util.stream.IntStream;
 
 public class Score {
 
-    double value;
+    private double value;
 
     public double getValue() {
         return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public Score compute(CV cv, JobDescription jobDescription) {

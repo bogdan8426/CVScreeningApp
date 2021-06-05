@@ -74,7 +74,7 @@ public class HomeController {
         Task<ObservableList<CV>> task = new Task<ObservableList<CV>>() {
             @Override
             public ObservableList<CV> call() throws CVGeneratorException {
-                return FXCollections.observableArrayList(generator.generateRandomFiles());
+                return FXCollections.observableArrayList(generator.generateRandomFiles(100));
             }
         };
 

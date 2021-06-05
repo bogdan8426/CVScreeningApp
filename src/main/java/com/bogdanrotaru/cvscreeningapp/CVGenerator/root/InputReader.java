@@ -11,7 +11,7 @@ import java.util.*;
 public class InputReader {
 
     private Map<String, Sex> names = new LinkedHashMap<>();
-    private String path = "C:\\Users\\Bogdan\\Desktop\\Facultate\\Java advanced\\CV Screening Application\\src\\CVScreening\\CVGenerator\\root\\";
+    private String path = "D:\\Personal projects\\CV Screening Application\\src\\main\\java\\com\\bogdanrotaru\\cvscreeningapp\\CVGenerator\\root\\";
     private List<String> universities = new LinkedList<>();
     private Map<Domain, Map<String, String>> jobs = new LinkedHashMap<>();
     private List<String> companies = new LinkedList<>();
@@ -62,9 +62,9 @@ public class InputReader {
         return jobs;
     }
 
-    public Map<String, Sex> getNames() throws FileNotFoundException {
+    public Map<String, Sex> getNames(int count) throws FileNotFoundException {
         try (Scanner namesFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "names.txt")))) {
-            while (namesFile.hasNextLine()) {
+            while (namesFile.hasNextLine() | count-->0) {
                 String line = namesFile.nextLine();
                 String[] values = line.split(",");
                 names.put(values[0] + "," + values[1], Sex.valueOf(values[2]));
