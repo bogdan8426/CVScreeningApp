@@ -2,11 +2,15 @@ package com.bogdanrotaru.cvscreeningapp.services;
 
 import com.bogdanrotaru.cvscreeningapp.CVGenerator.CVGenerator;
 import com.bogdanrotaru.cvscreeningapp.exceptions.CVGeneratorException;
+import com.bogdanrotaru.cvscreeningapp.mappers.CvMapper;
 import com.bogdanrotaru.cvscreeningapp.model.CV;
 import com.bogdanrotaru.cvscreeningapp.repositories.CVRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class GeneratorService {
@@ -19,8 +23,8 @@ public class GeneratorService {
         this.cvRepository = cvRepository;
     }
 
-    public void generateCVs(int count) throws CVGeneratorException {
-        List<CV> cvs = cvGenerator.generateRandomFiles(count);
-        cvRepository.saveAll(cvs);
+    public void generateCVs() throws CVGeneratorException {
+        List<CV> cvs = cvGenerator.generateRandomFiles();
+        cvRepository.saveAll(cvs.stream().map(CvMapper::map).collect(toList()));
     }
 }

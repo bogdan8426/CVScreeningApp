@@ -1,9 +1,11 @@
 package com.bogdanrotaru.cvscreeningapp.model;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CV {
 
+    private UUID id;
     private PersonalInfo info;
     private List<Education> education;
     private List<Experience> experience;
@@ -18,10 +20,23 @@ public class CV {
         this.score = new Score().compute(this, jobDescription);
     }
 
+    public CV(String id, PersonalInfo info, List<Education> education, List<Experience> experience) {
+        this(info, education, experience);
+        this.id = UUID.fromString(id);
+    }
+
     public CV(PersonalInfo info, List<Education> education, List<Experience> experience) {
         this.info = info;
         this.education = education;
         this.experience = experience;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public PersonalInfo getInfo() {

@@ -26,7 +26,7 @@ public class CVGeneratorTest {
 
     @Test
     public void generateTest() throws CVGeneratorException {
-        List<CV> cvs = generator.generateRandomFiles(10);
+        List<CV> cvs = generator.generateRandomFiles();
 
         assertNotNull(cvs);
         assertNotNull(cvs.get(4));

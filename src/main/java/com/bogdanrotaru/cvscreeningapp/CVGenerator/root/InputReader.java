@@ -2,12 +2,13 @@ package com.bogdanrotaru.cvscreeningapp.CVGenerator.root;
 
 import com.bogdanrotaru.cvscreeningapp.model.helpers.Domain;
 import com.bogdanrotaru.cvscreeningapp.model.helpers.Sex;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ObjectUtils;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.*;
 
+@Slf4j
 public class InputReader {
 
     private Map<String, Sex> names = new LinkedHashMap<>();
@@ -19,7 +20,9 @@ public class InputReader {
     public List<String> getCompanies() throws FileNotFoundException {
         try (Scanner companiesFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "companies.txt")))) {
             while (companiesFile.hasNextLine()) {
-                companies.add(companiesFile.nextLine());
+                String line = companiesFile.nextLine();
+                if (ObjectUtils.isEmpty(line)) continue;
+                companies.add(line);
             }
         }
 
@@ -62,12 +65,24 @@ public class InputReader {
         return jobs;
     }
 
-    public Map<String, Sex> getNames(int count) throws FileNotFoundException {
-        try (Scanner namesFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "names.txt")))) {
-            while (namesFile.hasNextLine() | count-->0) {
+    public Map<String, Sex> getNames() throws IOException {
+        try (Scanner namesFile = new Scanner(new BufferedInputStream(new FileInputStream(path + "names.txt")));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(path + "better-names.txt"))) {
+            while (namesFile.hasNextLine()) {
                 String line = namesFile.nextLine();
                 String[] values = line.split(",");
-                names.put(values[0] + "," + values[1], Sex.valueOf(values[2]));
+                if (values.length != 3) {
+                    log.warn("Error reading: " + Arrays.toString(values));
+
+                    continue;
+                }
+                try {
+                    Sex sex = Sex.valueOf(values[2]);
+                    names.put(values[0] + "," + values[1], sex);
+                    writer.write(line + System.getProperty("line.separator"));
+                } catch (Exception e) {
+                    log.warn("Error reading : " + e.getMessage());
+                }
             }
         }
         return names;

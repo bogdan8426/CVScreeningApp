@@ -11,6 +11,7 @@ import com.bogdanrotaru.cvscreeningapp.model.helpers.Sex;
 import com.bogdanrotaru.cvscreeningapp.model.helpers.TimeInterval;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.*;
@@ -22,11 +23,13 @@ class RandomCVs {
     private Random random = new Random();
     private InputReader reader = new InputReader();
 
-    public List<CV> generate(int count) throws CVFilesReadException {
+    public List<CV> generate() throws CVFilesReadException {
         try {
-            loadCVsFromTextFiles(count);
+            loadCVsFromTextFiles();
         } catch (FileNotFoundException e) {
             throw new CVFilesReadException("Problem generating list of random cvs, couldn't find txt file! ", e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         if (!cvs.isEmpty()) {
             Logger.getLogger(CVGenerator.class.getName()).info("CVs generated successfully!");
@@ -34,8 +37,8 @@ class RandomCVs {
         return cvs;
     }
 
-    private void loadCVsFromTextFiles(int count) throws FileNotFoundException {
-        Map<String, Sex> names = reader.getNames(count);
+    private void loadCVsFromTextFiles() throws IOException {
+        Map<String, Sex> names = reader.getNames();
         for (String name : names.keySet()) {
             cvs.add(getCV(name, names.get(name)));
         }

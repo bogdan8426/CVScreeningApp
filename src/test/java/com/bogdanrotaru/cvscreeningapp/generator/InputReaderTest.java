@@ -6,6 +6,7 @@ import com.bogdanrotaru.cvscreeningapp.model.helpers.Sex;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -42,8 +43,8 @@ public class InputReaderTest {
     }
 
     @Test
-    public void namesTest() throws FileNotFoundException{
-        Map<String, Sex> names = reader.getNames(3);
+    public void namesTest() throws IOException {
+        Map<String, Sex> names = reader.getNames();
 
         assertNotNull(names);
         assertTrue(names.size() > 1400);

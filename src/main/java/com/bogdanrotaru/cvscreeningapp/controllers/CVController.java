@@ -5,14 +5,12 @@ import com.bogdanrotaru.cvscreeningapp.exceptions.CVFilesReadException;
 import com.bogdanrotaru.cvscreeningapp.exceptions.CVGeneratorException;
 import com.bogdanrotaru.cvscreeningapp.model.CV;
 import com.bogdanrotaru.cvscreeningapp.model.JobDescription;
+import com.bogdanrotaru.cvscreeningapp.model.dto.CvDao;
 import com.bogdanrotaru.cvscreeningapp.model.helpers.Domain;
 import com.bogdanrotaru.cvscreeningapp.model.helpers.JobLevel;
 import com.bogdanrotaru.cvscreeningapp.services.GeneratorService;
 import com.bogdanrotaru.cvscreeningapp.services.ScoreService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -29,8 +27,8 @@ public class CVController {
     }
 
     @GetMapping("/generate")
-    public void generateResumes(Integer count) throws CVGeneratorException {
-        generatorService.generateCVs(count == null ? 10 : count);
+    public void generateResumes() throws CVGeneratorException {
+        generatorService.generateCVs();
     }
 
     @GetMapping("/jobDescription")
@@ -55,5 +53,11 @@ public class CVController {
     @GetMapping
     public List<CV> getAllCVs(){
         return scoreService.findAll();
+    }
+
+    @GetMapping("/{id}/message")
+    public String computeScores(@RequestBody JobDescription jobDescription,
+                                @PathVariable String id){
+        return scoreService.formulateMessage(id, jobDescription);
     }
 }
